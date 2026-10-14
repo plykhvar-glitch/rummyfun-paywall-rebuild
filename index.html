@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<title>Growth Audit — Rummy Fun</title>
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: only light;
+  /* ---- Rummy Fun, extracted from their live Shop (build 2026.40.9) ---- */
+  --rf-wood:#5A2A1F; --rf-wood2:#4A2119; --rf-woodfoot:#3A1714; --rf-scene:#3A7290; --rf-scene2:#336A86;
+  --rf-cream:#FDF6DA; --rf-creamtx:#FFF6E2; --rf-teal1:#27A59F; --rf-teal2:#2C9C9B; --rf-teal3:#4A8392; --rf-teal4:#4F7E90;
+  --rf-price:#223F4E; --rf-green:#78C35E; --rf-greentx:#24451C; --rf-orange1:#D9783A; --rf-orange2:#DE7C44; --rf-red:#BA3633;
+  --rf-btn1:#FFC069; --rf-btn2:#F39A2C; --rf-btnink:#5A2414; --rf-badge:#E2353D;
+  /* ---- the shell, in Rummy Fun's palette ---- */
+  --bg:#F8F1E1; --surf:#FFFDF7; --hair:rgba(74,33,25,.10); --hair2:rgba(74,33,25,.18);
+  --ink:#3A1A12; --ink2:#6A4A3E; --ink3:#9A8276;
+  --accent:#F39A2C; --accent-lift:#B5521C; --accent-ink:#9A3F12;
+  --panel-ink:#2A1610; --panel-muted:#7B6A62; --panel-line:#EFE7D8;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--ink);font-family:Nunito,-apple-system,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:70;background:rgba(248,241,225,.86);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--hair)}
+.nav-in{padding:0 28px;height:68px;display:flex;align-items:center;gap:10px}
+.nav-in img{width:30px;height:30px;border-radius:8px}
+.nav-in b{font-size:15px;font-weight:800}
+.nav-in span{font-size:15px;color:var(--ink2)}
+.nav-links{margin-left:auto;display:flex;gap:4px;background:#EEE3CC;border-radius:999px;padding:4px}
+.nav-links button{display:flex;align-items:center;gap:9px;height:44px;padding:0 20px 0 8px;border-radius:999px;font-size:15px;font-weight:700;color:var(--ink2);transition:background .18s,color .18s}
+.nav-links button .n{width:28px;height:28px;border-radius:50%;background:#fff;color:var(--ink3);display:grid;place-items:center;font-size:12.5px;font-weight:800}
+.nav-links button:hover{color:var(--ink)}
+.nav-links button.on{background:var(--ink);color:#fff}
+.nav-links button.on .n{background:rgba(255,255,255,.2);color:#fff}
+@media(max-width:560px){.nav-in{padding:0 14px}.nav-in b,.nav-in span{display:none}.nav-links button{height:40px;padding:0 14px 0 6px;font-size:14px}.nav-links button .n{width:26px;height:26px}}
+
+.view{display:none}.view.on{display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+@media(max-width:700px){.wrap{padding:0 20px}}
+
+/* ============ overview ============ */
+.hero{padding:96px 0 0;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-340px;left:50%;transform:translateX(-50%);width:1100px;height:640px;border-radius:50%;pointer-events:none;background:radial-gradient(closest-side,rgba(243,154,44,.26),transparent 72%)}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(40% 50% at 8% 24%,rgba(44,156,155,.20),transparent 70%),radial-gradient(36% 45% at 92% 20%,rgba(58,114,144,.20),transparent 70%),radial-gradient(30% 40% at 78% 74%,rgba(120,195,94,.16),transparent 70%)}
+.hero>*{position:relative;z-index:1}
+.hero-logo{width:300px;max-width:70%;display:block;margin:0 auto 18px;border-radius:20px;box-shadow:0 18px 40px -18px rgba(58,26,18,.45)}
+.eyebrow{font-size:11.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-lift);margin-bottom:22px}
+.hero h1{font-size:78px;line-height:1;font-weight:900;letter-spacing:-.035em;margin:0 0 22px}
+.hero .lede{font-size:21px;line-height:1.5;color:var(--ink2);max-width:680px;margin:0 auto;letter-spacing:-.01em}
+.hero .meta{margin-top:26px;font-size:13px;color:var(--ink3)}
+.hero .meta b{color:var(--ink2)}
+.herobtns{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap}
+.ghostbtn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--hair2);font-size:14.5px;font-weight:700;padding:9px 20px 9px 9px;border-radius:30px;box-shadow:0 2px 12px rgba(58,26,18,.06)}
+.ghostbtn .pl{width:30px;height:30px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:#fff}
+.ghostbtn.ac .pl{background:var(--accent)}
+@media(max-width:820px){.hero h1{font-size:52px}.hero{padding-top:56px}.hero .lede{font-size:17px}}
+.stats{display:flex;margin:60px auto 0;max-width:760px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.stat{flex:1;padding:26px 12px;text-align:center;border-left:1px solid var(--hair)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-size:28px;font-weight:900;letter-spacing:-.02em}
+.stat span{display:block;font-size:12px;color:var(--ink3);margin-top:5px;line-height:1.35}
+@media(max-width:700px){.stat b{font-size:19px}.stat{padding:18px 6px}}
+.fb{max-width:760px;margin:0 auto;padding:30px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:26px;text-align:left}
+@media(max-width:700px){.fb{grid-template-columns:1fr;gap:18px}}
+.fb-k{grid-column:1/-1;font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);text-align:center;margin-bottom:-6px}
+.fb-i{display:flex;gap:12px}
+.fb-i .tick{width:18px;height:18px;flex:none;margin-top:3px;border-radius:50%;background:rgba(243,154,44,.18);display:grid;place-items:center}
+.fb-i .tick svg{width:10px;height:10px;stroke:var(--accent-lift);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fb-i p{font-size:14.5px;line-height:1.55;color:var(--ink2)}
+.fb-i p b{color:var(--ink)}
+.sec{padding:92px 0}
+.sec-k{font-size:11.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px}
+.sec h2{font-size:38px;line-height:1.14;font-weight:800;letter-spacing:-.03em;margin:0 0 20px;max-width:760px}
+.sec p.body{font-size:17px;line-height:1.66;color:var(--ink2);max-width:680px;margin:0 0 18px}
+.sec p.body b{color:var(--ink);font-weight:800}
+@media(max-width:820px){.sec h2{font-size:29px}.sec{padding:60px 0}}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 8px;max-width:900px}
+@media(max-width:760px){.trio{grid-template-columns:1fr}}
+.trio div{background:var(--surf);border:1px solid var(--hair);border-radius:18px;padding:20px 22px}
+.trio b{display:block;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-lift);margin-bottom:6px}
+.trio p{font-size:14.5px;line-height:1.55;color:var(--ink2)}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px;max-width:900px}
+@media(max-width:760px){.notes{grid-template-columns:1fr}}
+.note{background:var(--surf);border:1px solid var(--hair);border-radius:18px;padding:24px 26px;box-shadow:0 2px 10px rgba(58,26,18,.04)}
+.note h4{font-size:16.5px;font-weight:800;margin-bottom:8px}
+.note p{font-size:14.5px;line-height:1.6;color:var(--ink2)}
+.ideas{margin-top:14px;border-top:1px solid var(--hair)}
+.idea{display:grid;grid-template-columns:52px 1fr 200px;gap:26px;align-items:start;padding:28px 4px;border-bottom:1px solid var(--hair);text-align:left;width:100%;transition:background .15s}
+.idea:hover{background:rgba(255,255,255,.65)}
+@media(max-width:780px){.idea{grid-template-columns:38px 1fr;gap:16px}}
+.idea .no{width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font:800 13px/30px Nunito,sans-serif;text-align:center}
+.idea h3{font-size:21px;line-height:1.25;font-weight:800;letter-spacing:-.02em;margin-bottom:7px}
+.idea p{font-size:15px;line-height:1.6;color:var(--ink2);max-width:580px}
+.idea .seeit{display:block;margin-top:10px;font-size:13px;font-weight:800;color:var(--accent-lift)}
+.idea .out{text-align:right;padding-top:3px}
+@media(max-width:780px){.idea .out{grid-column:2;text-align:left;padding-top:4px}}
+.idea .out b{display:block;font-size:19px;font-weight:900;color:var(--accent-lift);white-space:nowrap}
+.idea .out span{display:block;font-size:10.5px;color:var(--ink3);margin-top:3px;letter-spacing:.04em;text-transform:uppercase;font-weight:700}
+.band{background:var(--surf);border:1px solid var(--hair);border-radius:28px;padding:38px 44px;margin-top:44px;display:flex;align-items:center;gap:36px;flex-wrap:wrap;box-shadow:0 2px 10px rgba(58,26,18,.04)}
+@media(max-width:700px){.band{padding:28px 24px}}
+.band .lab{font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.band .txt{flex:1;min-width:240px}
+.band .txt p{font-size:16px;line-height:1.6;color:var(--ink2)}
+.band .nums{display:flex;gap:30px;flex-wrap:wrap}
+.band .nums b{display:block;font-size:30px;font-weight:900;letter-spacing:-.03em;color:var(--accent-lift);white-space:nowrap}
+.band .nums span{display:block;font-size:11px;color:var(--ink3);letter-spacing:.04em;text-transform:uppercase;font-weight:700}
+.cta-row{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:52px;flex-wrap:wrap}
+.bigbtn{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:var(--rf-btnink);font-size:16px;font-weight:900;padding:16px 28px;border-radius:30px;box-shadow:0 8px 20px -10px rgba(181,82,28,.6)}
+.qr{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:12px 20px 12px 12px;box-shadow:0 2px 10px rgba(58,26,18,.04)}
+.qr img{width:135px;height:135px;image-rendering:pixelated;display:block}
+.qr b{display:block;font-size:14.5px}
+.qr span{display:block;font-size:13px;color:var(--ink3);line-height:1.45;max-width:170px}
+@media(max-width:1080px){.qr{display:none}}
+.foot{border-top:1px solid var(--hair);padding:36px 0 70px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+
+/* ============ prototype view ============ */
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 400px;align-items:start;min-height:calc(100vh - 68px)}
+@media(max-width:1180px){.stage{grid-template-columns:minmax(0,1fr)}.panelcol{position:static!important;max-height:none!important;border-left:0!important;border-top:1px solid var(--hair)}}
+.phonecol{padding:22px 24px 44px;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;min-width:0}
+.panelcol{border-left:1px solid var(--hair);background:#fff;position:sticky;top:68px;max-height:calc(100vh - 68px);overflow-y:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.seg{display:inline-flex;background:#fff;border:1px solid #E6DAC3;border-radius:20px;padding:3px;gap:2px}
+.seg button{padding:6px 12px;border-radius:16px;font:700 12.5px/1 Nunito,sans-serif;color:var(--ink2)}
+.seg button.on{background:var(--ink);color:#fff}
+.seg.demo button{display:flex;align-items:center;gap:6px}
+.demo-cap{width:866px;max-width:100%;background:var(--ink);color:#fff;border-radius:14px;padding:0 16px;font-size:14px;line-height:1.4;overflow:hidden;max-height:0;transition:max-height .25s,padding .25s}
+.demo-cap.on{max-height:90px;padding:11px 16px 13px}
+.demo-cap .bar{height:3px;background:rgba(255,255,255,.18);border-radius:2px;margin-top:9px;overflow:hidden}
+.demo-cap .bar i{display:block;height:100%;width:0;background:var(--accent)}
+.finger{position:absolute;z-index:200;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:rgba(58,26,18,.28);border:2px solid rgba(255,255,255,.95);box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;opacity:0;transition:left .38s cubic-bezier(.4,0,.2,1),top .38s cubic-bezier(.4,0,.2,1),transform .12s,opacity .2s}
+.finger.on{opacity:1}.finger.press{transform:scale(.72)}
+
+/* landscape phone, scaled to fit its column */
+.phonebox{position:relative;width:866px;height:412px;flex:none}
+.phone{position:absolute;left:0;top:0;width:866px;height:412px;transform-origin:0 0;background:#000;border:11px solid #000;border-radius:46px;box-shadow:0 0 0 1.5px #D9CBB2,0 34px 70px -22px rgba(58,26,18,.4)}
+.phone-in{position:absolute;inset:0;border-radius:36px;overflow:hidden;background:var(--rf-scene);color-scheme:only light}
+.island{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:32px;height:118px;background:#000;border-radius:18px;z-index:60}
+.homebar{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:150px;height:5px;border-radius:3px;background:rgba(255,255,255,.75);z-index:56}
+
+/* ---- the Shop: Rummy Fun's system, prefixed rf- ---- */
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;font-family:Nunito,sans-serif;color:var(--rf-creamtx)}
+.rf-top{flex:none;height:53px;position:relative;z-index:3;display:flex;align-items:center;gap:12px;padding:0 50px 0 64px;background:linear-gradient(180deg,#61301F,var(--rf-wood) 60%,var(--rf-wood2));box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.rf-round{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;background:radial-gradient(circle at 50% 30%,var(--rf-btn1),var(--rf-btn2) 70%);box-shadow:inset 0 -3px 0 rgba(150,60,10,.35),0 2px 0 rgba(0,0,0,.35)}
+.rf-title{font-size:25px;font-weight:900;letter-spacing:.005em;color:var(--rf-creamtx);text-shadow:0 2px 0 rgba(0,0,0,.25);display:flex;align-items:center;gap:8px}
+.rf-i{width:16px;height:16px;border-radius:50%;background:#F7B23A;color:#5A2414;font:900 11px/16px Nunito,sans-serif;text-align:center}
+.rf-bal{margin-left:auto;display:flex;align-items:center;height:28px;border-radius:16px;background:#2B1210;box-shadow:inset 0 2px 3px rgba(0,0,0,.5),0 1px 0 rgba(255,255,255,.08);padding:0 18px 0 0;min-width:136px;position:relative}
+.rf-bal .coin{width:34px;height:34px;margin:-3px 8px -3px -10px}
+.rf-bal b{flex:1;text-align:center;font-size:17px;font-weight:800;letter-spacing:.01em;transition:color .3s}
+.rf-bal.up b{color:#FFD27A}
+.rf-garland{position:absolute;left:0;right:0;top:53px;height:30px;background:url(img/garland.png) repeat-x 0 0/auto 30px;z-index:2;pointer-events:none}
+.rf-scene{flex:1;min-height:0;position:relative;background-color:var(--rf-scene);background-image:linear-gradient(45deg,rgba(255,255,255,.035) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.035) 75%),linear-gradient(45deg,rgba(255,255,255,.035) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.035) 75%);background-size:36px 36px;background-position:0 0,18px 18px}
+.rf-row{position:absolute;left:0;right:0;top:30px;bottom:0;display:flex;gap:19px;align-items:flex-start;overflow-x:auto;overflow-y:hidden;padding:0 48px 0 62px;scroll-snap-type:x proximity;scrollbar-width:none;transition:filter .3s}
+.rf-row::-webkit-scrollbar{display:none}
+.rf-row::after{content:'';flex:none;width:10px}
+.rf-cardwrap{flex:none;position:relative;scroll-snap-align:start;scroll-margin-left:62px;transition:transform .35s}
+.rf-card{position:relative;width:135px;height:218px;border-radius:22px;background:var(--rf-cream);padding:7px;box-shadow:0 4px 0 rgba(0,0,0,.12),0 10px 18px -8px rgba(0,0,0,.35);text-align:center;display:block}
+.rf-in{position:relative;height:100%;border-radius:15px;overflow:hidden;background:linear-gradient(180deg,var(--rf-teal1),var(--rf-teal2) 34%,var(--rf-teal3) 78%,var(--rf-teal4));display:flex;flex-direction:column}
+.rf-amt{flex:none;height:56px;padding-top:8px;line-height:1}
+.rf-amt .c{display:flex;align-items:center;justify-content:center;gap:2px;font-size:20px;font-weight:900;color:#F4F1EA;text-shadow:0 1.5px 0 rgba(20,40,50,.45)}
+.rf-amt .c svg{width:19px;height:19px;flex:none}
+.rf-amt .h{display:flex;align-items:center;justify-content:center;gap:3px;margin-top:5px;font-size:14.5px;font-weight:800;color:#F4F1EA;text-shadow:0 1px 0 rgba(20,40,50,.4)}
+.rf-amt .h svg{width:14px;height:15px}
+.rf-art{flex:1;min-height:0;position:relative}
+.rf-art img{position:absolute;left:50%;top:50%;width:121px;height:101px;transform:translate(-50%,-50%);object-fit:cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);mask-composite:intersect}
+.rf-free{flex:none;height:17px;background:var(--rf-green);color:var(--rf-greentx);font-size:12.5px;font-weight:800;line-height:17px;display:flex;align-items:center;justify-content:center;gap:3px;white-space:nowrap;transition:background .3s}
+.rf-free svg{width:12px;height:12px}
+.rf-free.none{background:transparent}
+.rf-price{flex:none;height:28px;background:var(--rf-price);font-size:17.5px;font-weight:800;line-height:28px;color:#F4F1EA;position:relative}
+.rf-badge{position:absolute;z-index:4;width:50px;height:50px;right:-14px;top:57px;display:grid;place-items:center;transform:rotate(-14deg);pointer-events:none}
+.rf-badge svg{position:absolute;inset:0;width:100%;height:100%}
+.rf-badge span{position:relative;color:#FFF3E6;font:800 11px/1.05 Nunito,sans-serif;text-align:center;max-width:44px}
+.rf-badge.lg{width:52px;height:52px}
+/* starter pack */
+.rf-card.wide{width:287px}
+.rf-card.wide .rf-in{background:linear-gradient(180deg,#D6773A,var(--rf-orange1) 40%,var(--rf-orange2))}
+.rf-st-h{flex:none;height:44px;padding-top:7px;font-size:18px;font-weight:900;color:#FCEFD8;text-shadow:0 1.5px 0 rgba(110,40,10,.35);position:relative}
+.rf-st-h::after{content:'';position:absolute;left:44px;right:44px;bottom:6px;height:1.5px;background:linear-gradient(90deg,transparent,#F6CC8C 30%,#F6CC8C 70%,transparent)}
+.rf-st-h i{position:absolute;left:50%;bottom:2px;width:9px;height:9px;margin-left:-4.5px;border:1.5px solid #F6CC8C;transform:rotate(45deg);background:var(--rf-orange1);z-index:1}
+.rf-st-body{flex:1;min-height:0;display:flex;align-items:center}
+.rf-st-body img{width:156px;height:124px;object-fit:cover;flex:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 88%,transparent),linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 88%,transparent),linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);mask-composite:intersect}
+.rf-st-amt{flex:1;line-height:1}
+.rf-st-amt .c{display:flex;align-items:center;justify-content:center;gap:3px;font-size:26px;font-weight:900;color:#FCEFD8;text-shadow:0 2px 0 rgba(110,40,10,.35)}
+.rf-st-amt .c svg{width:23px;height:23px}
+.rf-st-amt .h{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:6px;font-size:17px;font-weight:800;color:#FCEFD8}
+.rf-st-amt .h svg{width:15px;height:16px}
+.rf-card.wide .rf-price{background:var(--rf-red)}
+.rf-left{position:absolute;right:8px;top:4px;height:20px;padding:0 7px;border-radius:5px;background:rgba(90,20,18,.55);font-size:12px;line-height:20px;font-weight:700}
+.rf-ends{text-align:center;font-size:12.5px;font-weight:800;margin-top:7px;color:#FFF6E2;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.rf-foot{flex:none;height:62px;position:relative;z-index:3;display:flex;align-items:center;gap:10px;padding:0 60px 0 64px;background:linear-gradient(180deg,#3E1916,var(--rf-woodfoot));border-top:2px solid #5D2C1F}
+.rf-foot svg{width:34px;height:38px;flex:none;margin-top:-10px}
+.rf-foot p{font-size:15px;line-height:1.2;font-weight:600;color:#F6EBDA;max-width:260px}
+/* offer on close: a sheet over the shop */
+.rf-dim{position:absolute;inset:0;z-index:20;background:rgba(18,8,6,.6);opacity:0;pointer-events:none;transition:opacity .3s}
+.rf-sheet{position:absolute;z-index:21;left:50%;top:50%;width:510px;margin-left:-255px;height:340px;margin-top:-170px;border-radius:24px;background:var(--rf-cream);padding:7px;transform:translateY(130%);transition:transform .38s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;box-shadow:0 20px 50px -10px rgba(0,0,0,.6)}
+.scr.offer .rf-dim{opacity:1;pointer-events:auto}
+.scr.offer .rf-sheet{transform:translateY(0)}
+.rf-sh-top{flex:none;height:44px;border-radius:17px 17px 0 0;background:linear-gradient(180deg,#61301F,var(--rf-wood));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:var(--rf-creamtx);position:relative}
+.rf-sh-x{position:absolute;right:6px;top:5px;width:32px;height:32px}
+.rf-sh-body{flex:1;min-height:0;overflow:hidden;background:var(--rf-scene);display:flex;align-items:center;gap:16px;padding:0 18px}
+.rf-sh-body .rf-cardwrap{scroll-snap-align:none}
+.rf-sh-txt{flex:1;min-width:0;color:#FFF6E2}
+.rf-sh-txt p{font-size:14px;line-height:1.35;font-weight:700}
+.rf-sh-txt .tm{white-space:nowrap;margin-top:10px;display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:800;padding:4px 10px;border-radius:10px;background:rgba(0,0,0,.25)}
+.rf-sh-foot{flex:none;height:62px;border-radius:0 0 17px 17px;background:var(--rf-woodfoot);display:flex;align-items:center;justify-content:center;gap:18px}
+.rf-buy{height:42px;padding:0 30px;border-radius:22px;background:linear-gradient(180deg,var(--rf-btn1),var(--rf-btn2));color:var(--rf-btnink);font:900 18px/42px Nunito,sans-serif;box-shadow:inset 0 -3px 0 rgba(150,60,10,.35),0 3px 0 rgba(0,0,0,.35)}
+.rf-no{font-size:14px;font-weight:700;color:#D9C6B0;text-decoration:underline;text-underline-offset:3px}
+.rf-toast{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);background:rgba(20,10,8,.9);color:#fff;font:700 14px/1.4 Nunito,sans-serif;padding:9px 16px;border-radius:12px;z-index:80;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+.rf-toast.show{opacity:1}
+.hl{animation:flash 1.6s ease 2}
+@keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(255,210,122,0)}50%{box-shadow:0 0 0 4px #FFD27A}}
+
+/* dark mode — approximated: Rummy Fun ships no dark Shop */
+.phone-in.dark{--rf-scene:#1D3A4B;--rf-wood:#3E1C15;--rf-wood2:#321610;--rf-woodfoot:#220D0B;--rf-cream:#D8CCAE}
+.phone-in.dark .rf-row,.phone-in.dark .rf-sh-body .rf-cardwrap{filter:brightness(.8) saturate(.95)}
+.phone-in.dark .rf-top{background:linear-gradient(180deg,#45201A,var(--rf-wood) 60%,var(--rf-wood2))}
+.phone-in.dark .rf-garland{filter:brightness(.7)}
+.phone-in.dark .rf-sh-top{background:linear-gradient(180deg,#45201A,var(--rf-wood))}
+
+/* behind the screen */
+.bts{width:866px;max-width:100%;background:#fff;border:1px solid var(--hair);border-radius:20px;box-shadow:0 2px 10px rgba(58,26,18,.04);overflow:hidden}
+.bts-tabs{display:flex;gap:2px;padding:6px;background:#F6EEDC;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.bts-tabs .k{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);padding:0 12px;align-self:center;margin-right:auto}
+.bts-tabs button{padding:8px 14px;border-radius:12px;font-size:13.5px;font-weight:800;color:var(--ink2)}
+.bts-tabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(58,26,18,.1)}
+.bts-p{display:none;padding:20px 22px 22px}
+.bts-p.on{display:block}
+.rc{display:grid;grid-template-columns:250px 1fr;gap:22px}
+@media(max-width:760px){.rc{grid-template-columns:1fr}}
+.rc label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:0 0 7px}
+.rc label+.opts{margin-bottom:16px}
+.rc .lead{font-size:13px;color:var(--ink3);line-height:1.45;margin-bottom:14px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{padding:8px 13px;border-radius:18px;border:1px solid #E6DAC3;background:#fff;font:700 13px/1 Nunito,sans-serif;color:var(--ink2)}
+.opts button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.json{background:#24130E;color:#F3E6D4;border-radius:14px;padding:14px 16px;font:400 12.2px/1.62 'JetBrains Mono',ui-monospace,monospace;white-space:pre;overflow-x:auto;min-height:240px}
+.json .cm{color:#A88C7C}.json .ky{color:#FFC069}.json .st{color:#9FD98A}.json .chg{background:rgba(255,192,105,.18);border-radius:4px;box-shadow:0 0 0 2px rgba(255,192,105,.18)}
+.json-cap{font-size:11.5px;color:var(--ink3);margin-top:7px}
+.rs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.rs{grid-template-columns:1fr}}
+.rs-col{border:1px solid var(--hair);border-radius:16px;padding:16px 18px}
+.rs-col h5{font-size:14px;font-weight:900;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.rs-col h5 svg{width:16px;height:16px}
+.rs-step{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:13.5px;line-height:1.45;color:var(--ink2);padding:6px 0}
+.rs-step i{width:20px;height:20px;border-radius:50%;background:#F6EEDC;color:var(--accent-ink);font:900 11px/20px Nunito,sans-serif;text-align:center;font-style:normal}
+.rs-step b{color:var(--ink)}
+.rs-data{margin-top:8px;background:#FBF6EA;border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.6;color:var(--ink2)}
+.rs-data b{color:var(--ink)}
+.rs-note{font-size:11.5px;color:var(--ink3);margin-top:12px;line-height:1.5}
+.cs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.cs{grid-template-columns:1fr}}
+.cs-col{border:1px solid var(--hair);border-radius:16px;padding:16px 18px}
+.cs-col h5{font-size:14px;font-weight:900;margin-bottom:4px}
+.cs-col .s{font-size:12px;color:var(--ink3);margin-bottom:10px}
+.cs-r{display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center;font-size:13px;font-weight:700;color:var(--ink2);padding:5px 0}
+.cs-r i{display:block;height:12px;border-radius:6px;background:repeating-linear-gradient(90deg,#EFE4CF 0 10px,#F7EFDF 10px 20px)}
+.cs-r.in i{background:repeating-linear-gradient(90deg,#CFE8C4 0 10px,#E2F1DB 10px 20px)}
+.cs-q{grid-column:1/-1;background:#FBF6EA;border-radius:14px;padding:12px 16px;font-size:13.5px;line-height:1.55;color:var(--ink2)}
+.cs-q b{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;width:866px;max-width:100%}
+.chip{padding:8px 13px;border-radius:18px;border:1px solid #E6DAC3;background:#fff;font:700 13px/1 Nunito,sans-serif;color:var(--ink2);display:flex;align-items:center;gap:7px}
+.chip i{font-style:normal;width:18px;height:18px;border-radius:50%;background:#F6EEDC;color:var(--accent-ink);font:900 10.5px/18px Nunito,sans-serif;text-align:center}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip.on i{background:rgba(255,255,255,.2);color:#fff}
+.chip.offer{border-color:var(--accent);color:var(--accent-ink)}
+.chip.offer.on{background:var(--accent);color:var(--rf-btnink);border-color:var(--accent)}
+.hint{font-size:12.5px;color:var(--ink3);text-align:center}
+.qr.side{width:866px;max-width:100%}
+
+/* panel */
+.pn{padding:32px 34px 60px;color:var(--panel-ink)}
+.pn-eb{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink)}
+.pn-eb.ctx{color:var(--panel-muted)}
+.pn h1{font-size:27px;line-height:1.16;font-weight:900;letter-spacing:-.025em;margin:10px 0 14px}
+.pn .hyp{font-size:15.5px;line-height:1.62;color:#3E2F28}
+.pn .hyp b{color:var(--panel-ink);font-weight:800}
+.pn-out{margin-top:22px}
+.pn-out .lbl{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--panel-muted)}
+.pn-out b{display:block;font-size:31px;line-height:1.15;font-weight:900;letter-spacing:-.03em;color:var(--accent-ink);margin-top:4px}
+.pn-out span{display:block;font-size:12px;color:var(--panel-muted)}
+.pn-sep{border-top:1px solid var(--panel-line);margin:22px 0 20px}
+.kept{border-top:1px solid var(--panel-line);padding-top:18px;margin-top:22px}
+.kept .k{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--panel-muted)}
+.kept p{font-size:14px;line-height:1.6;color:#4A3A33;margin-top:6px}
+.pn-lang{display:none;font-size:12.5px;color:var(--panel-muted);background:#FBF6EA;border-radius:10px;padding:9px 12px;margin-top:14px}
+.pn-lang.on{display:block}
+.pn-foot{font-size:11.5px;line-height:1.55;color:var(--panel-muted);border-top:1px solid var(--panel-line);padding-top:14px;margin-top:22px}
+
+/* on a phone: the prototype is the screen (portrait: full width; sideways: full screen) */
+body.fs .phone{border:0;border-radius:0;box-shadow:none}
+body.fs .phone-in{border-radius:0}
+body.fs .island,body.fs .homebar{display:none}
+body.fs .rf-top{padding-left:14px;padding-right:14px}
+body.fs .rf-row{padding-left:14px}body.fs .rf-cardwrap{scroll-margin-left:14px}
+body.fs .rf-foot{padding-left:16px}
+body.land .nav{display:none}body.land .phonecol{padding:0 0 28px}body.land .phonebox{order:-1}body.land .demo-cap.on{position:fixed;left:10px;right:10px;bottom:10px;width:auto;z-index:150}
+.rc>div{min-width:0}
+@media(max-width:500px){
+  .phonecol{padding:12px 0 28px;gap:12px}
+  .tools{order:2;padding:0 8px}.seg button{padding:6px 10px;font-size:12px}
+  .demo-cap{width:auto;align-self:stretch;margin:0 10px}
+  .demo-cap.on{position:fixed;left:10px;right:10px;bottom:10px;width:auto;z-index:150}
+  .phonebox{order:1}
+  .chips{order:3;padding:0 10px}.hint{order:4;padding:0 14px}.bts{order:5;width:auto;align-self:stretch;margin:0 10px}
+}
+</style>
+</head>
+<body>
+<div class="nav"><div class="nav-in"><img src="img/icon.png" alt="Rummy Fun"><b>Growth Audit</b><span>· Rummy Fun</span><div class="nav-links"><button class="on" data-view="over"><span class="n">1</span>Overview</button><button data-view="proto"><span class="n">2</span>Prototype</button></div></div></div>
+
+<!-- ======================= OVERVIEW ======================= -->
+<div class="view on" id="view-over">
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">Growth Audit · October 2026</div>
+  <h1>Rummy Fun</h1>
+  <p class="lede">Five ideas to sell more coins from the Shop you already built, tested without shipping a new build.</p>
+  <div class="meta">Prepared by <b>Adapty</b> · based on your live iOS game, your App Store and your Google Play listings</div>
+  <div class="herobtns">
+    <button class="ghostbtn" data-view="proto"><span class="pl"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>Open the prototype</button>
+    <button class="ghostbtn ac" id="heroDemo"><span class="pl"><svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M7 4.5v15l12-7.5z"/></svg></span>Watch the 30-second walkthrough</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>30,000+</b><span>apps run their<br>purchases on Adapty</span></div>
+    <div class="stat"><b>5</b><span>ideas, each shown<br>on your own Shop</span></div>
+    <div class="stat"><b>0</b><span>design changes<br>to your art direction</span></div>
+  </div>
+  <div class="fb">
+    <div class="fb-k">Built in Adapty Flow Builder</div>
+    <div class="fb-i"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><p><b>Millions of dollars</b> in subscription revenue pass through Flow Builder every month.</p></div>
+    <div class="fb-i"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><p><b>Nearly 500 apps</b> actively build their paywalls and onboarding in it — plenty of them past $100K MRR.</p></div>
+  </div>
+</div></div>
+
+<div class="sec"><div class="wrap">
+  <div class="sec-k">What this is</div>
+  <h2>We played Rummy Fun as a new player, then rebuilt the one screen where coins are sold.</h2>
+  <p class="body">Adapty powers in-app purchases for <b>30,000+ apps</b>, so we see what moves conversion across the market, not inside one game. We installed Rummy Fun, played through Marianne’s tutorial, opened the Shop and read your App Store and Google Play listings.</p>
+  <p class="body">Your Shop is your own screen, drawn by your game. <b>It stays that way.</b> Adapty does not replace it. It tells it what to show, to whom, and which version wins:</p>
+  <div class="trio">
+    <div><b>Remote Config</b><p>A JSON payload on an Adapty paywall: which packs, in which order, which badges, where the Shop opens. Your client reads it and draws it.</p></div>
+    <div><b>Segments</b><p>New players, payers and high spenders each get their own payload, built from purchase history Adapty already holds.</p></div>
+    <div><b>A/B tests</b><p>Two payloads, one audience, revenue per player as the winner. No build, no store review, on iOS and Android at once.</p></div>
+  </div>
+  <div class="notes">
+    <div class="note"><h4>We did not redesign your Shop</h4><p>The wood header, the autumn garland, the cream-framed teal cards, the green bonus bars, Popular and Best deal, the orange Starter Pack with its timer and the VIP line all stay. Only what the Shop is told to show changes.</p></div>
+    <div class="note"><h4>You may have tested some of this</h4><p>We are working from the outside, so we cannot see your experiment history. If you have already run one of these, tell us and we will go deeper on the rest.</p></div>
+  </div>
+</div></div>
+
+<div class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-k">The five ideas</div>
+  <h2>Ranked by what we would test first.</h2>
+  <p class="body">Each one opens the prototype on the screen that shows it.</p>
+  <div class="ideas">
+    <button class="idea" data-go="ab"><span class="no">1</span><span>
+      <h3>A/B test your Shop without shipping a build</h3>
+      <p>Seven packs from 2,49 € to 119,99 €, two badges, a bonus on every card, and every change to any of them waits for a release on two stores. Read the Shop from Remote Config and the first test is ready today: “+7,500 free” instead of “30% free”, the same coins said as coins.</p>
+      <span class="seeit">See the test →</span></span>
+      <span class="out"><b>ARPU +5–10%</b><span>per paying player</span></span></button>
+    <button class="idea" data-go="seg"><span class="no">2</span><span>
+      <h3>Open a different Shop for each kind of player</h3>
+      <p>A player on their first game and a player who already bought the 59,99 € pack see the same row, starting at the Starter Pack. With segments, new players open on the Starter Pack, payers on 2,500, and high spenders on the 75,000 chest.</p>
+      <span class="seeit">See the three Shops →</span></span>
+      <span class="out"><b>CR +10–15%</b><span>to a purchase</span></span></button>
+    <button class="idea" data-go="offer"><span class="no">3</span><span>
+      <h3>Show the Starter Pack when a new player leaves the Shop</h3>
+      <p>Your cheapest way in is 3,49 € for 2,250 coins with 50% free, and it is one card in a row someone can scroll past. When a player who has never paid taps back, the Starter Pack opens on its own, with your own timer.</p>
+      <span class="seeit">See the offer →</span></span>
+      <span class="out"><b>ARPU +10–15%</b><span>from the second chance</span></span></button>
+    <button class="idea" data-go="refund"><span class="no">4</span><span>
+      <h3>Win back refunded coin packs, on iOS and on Android</h3>
+      <p>A coin pack that has already been played through is the easiest refund to contest, but the store only knows that if you tell it. Refund Saver answers Apple’s refund requests and Google Play chargebacks for you, with how the coins were used. Most of your ratings come from Google Play, so Android is not the footnote here.</p>
+      <span class="seeit">See how it works →</span></span>
+      <span class="out"><b>Refunds up to −40%</b><span>Adapty Refund Saver</span></span></button>
+    <button class="idea" data-go="coins"><span class="no">5</span><span>
+      <h3>See where every coin goes</h3>
+      <p>The Shop sells coins, but the wish to buy starts at the table where they ran out. We would build coin-spend analytics for you on top of Adapty: coins bought, earned and spent, by segment, next to the revenue they came from.</p>
+      <span class="seeit">See what it shows →</span></span>
+      <span class="out"><b>Built for you</b><span>coin spend in Adapty</span></span></button>
+  </div>
+  <div class="band">
+    <div class="txt"><div class="lab">Potential outcome</div><p>Together, the five turn your Shop into something you can tune every week: shown differently to each player, tested without a release, protected from refunds, and measured in coins as well as euros.</p></div>
+    <div class="nums"><div><b>up to +15%</b><span>CR to a purchase</span></div><div><b>up to +15%</b><span>ARPU</span></div><div><b>up to −40%</b><span>refunds</span></div></div>
+  </div>
+  <div class="cta-row">
+    <button class="bigbtn" data-view="proto">Open the prototype <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    <div class="qr"><img src="img/qr.svg" alt="QR code to the prototype"><div><b>Open it on your phone</b><span>Scan to try the Shop in your hand.</span></div></div>
+  </div>
+</div></div>
+<div class="foot"><div class="wrap">Impact ranges are Adapty’s expected effect from teardowns and A/B tests across apps — not measured lift for Rummy Fun. The refund figure is the reduction Adapty publishes for Refund Saver. Every pack, price, bonus, badge and timer here comes from Rummy Fun’s own Shop; ratings come from your App Store and Google Play listings.</div></div>
+</div><!-- /view-over -->
+
+<!-- ======================= PROTOTYPE ======================= -->
+<div class="view" id="view-proto">
+<div class="stage">
+  <div class="phonecol" id="phonecol">
+    <div class="tools">
+      <div class="seg" id="segLang"><button data-l="en" class="on">EN</button><button data-l="de">DE</button><button data-l="fr">FR</button></div>
+      <div class="seg" id="segTheme"><button data-th="light" class="on">Light</button><button data-th="dark">Dark</button></div>
+      <div class="seg demo"><button id="demoBtn"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg>30-sec walkthrough</button></div>
+    </div>
+    <div class="demo-cap" id="demoCap"><span id="demoTxt"></span><div class="bar"><i id="demoBar"></i></div></div>
+
+    <div class="phonebox" id="phonebox"><div class="phone" id="phone">
+      <div class="phone-in" id="phoneIn">
+        <div class="island"></div>
+        <div class="homebar"></div>
+        <section class="scr" id="shop">
+          <div class="rf-top">
+            <button class="rf-round" id="rfBack" aria-label="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A2414" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <div class="rf-title"><span data-t="shop">Shop</span><span class="rf-i">i</span></div>
+            <div class="rf-bal" id="rfBal"><svg class="coin" viewBox="0 0 40 40"><use href="#coin"/></svg><b id="rfBalN">2,500</b></div>
+            <button class="rf-round" aria-label="Home" id="rfHome"><svg width="18" height="18" viewBox="0 0 24 24" fill="#8E2313"><path d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/></svg></button>
+          </div>
+          <div class="rf-garland"></div>
+          <div class="rf-scene"><div class="rf-row" id="rfRow"></div></div>
+          <div class="rf-foot"><svg viewBox="0 0 34 38"><use href="#vip"/></svg><p data-t="vip">Collect VIP points for a higher bonus.</p></div>
+          <div class="rf-dim" id="rfDim"></div>
+          <div class="rf-sheet" id="rfSheet">
+            <div class="rf-sh-top"><span data-t="offerT">Before you go</span><button class="rf-round rf-sh-x" id="rfShX" aria-label="Close"><svg width="13" height="13" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2 2 12" stroke="#5A2414" stroke-width="2.8" stroke-linecap="round"/></svg></button></div>
+            <div class="rf-sh-body"><div id="rfShCard"></div><div class="rf-sh-txt"><p data-t="offerS">Your Starter Pack is for new players only.</p><span class="tm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="rfShTm"></span></span></div></div>
+            <div class="rf-sh-foot"><button class="rf-no" id="rfNo" data-t="no">No thanks</button><button class="rf-buy" id="rfBuy">3,49 €</button></div>
+          </div>
+          <div class="rf-toast" id="toast"></div>
+        </section>
+      </div>
+    </div></div>
+
+    <div class="chips" id="chips"></div>
+    <div class="hint" id="hint">Tap any pack to buy it, or the orange back arrow to leave the Shop.</div>
+
+    <div class="bts" id="bts">
+      <div class="bts-tabs"><span class="k">Behind the screen · Adapty</span><button data-tab="rc" class="on">Remote Config</button><button data-tab="refund">Refund Saver</button><button data-tab="coins">Coin spend</button></div>
+      <div class="bts-p on" data-p="rc"><div class="rc">
+        <div>
+          <p class="lead">The Shop above is drawn from this payload. Change who opens it, or which test variant they are in.</p>
+          <label>Who opens the Shop · segment</label>
+          <div class="opts" id="oSeg"><button data-k="new">New player</button><button data-k="payer">Payer</button><button data-k="whale">High spender</button></div>
+          <label>A/B test · Shop bonus copy</label>
+          <div class="opts" id="oVar"><button data-k="A">A · “30% free”</button><button data-k="B">B · “+7,500 free”</button></div>
+        </div>
+        <div><div class="json" id="json"></div><div class="json-cap">Example payload. Pack IDs stand in for your own store product IDs; amounts and prices come from the products themselves.</div></div>
+      </div></div>
+      <div class="bts-p" data-p="refund">
+        <div class="rs">
+          <div class="rs-col"><h5><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.1zM13.9 4.9c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg>App Store · refund requests</h5>
+            <div class="rs-step"><i>1</i><span>A player asks Apple to refund the <b>3,49 € Starter Pack</b>.</span></div>
+            <div class="rs-step"><i>2</i><span>Apple asks you how the purchase was used. <b>Leaving that unanswered makes approval more likely.</b></span></div>
+            <div class="rs-step"><i>3</i><span>Refund Saver answers for you, with your preferred outcome and the player’s consumption data:</span></div>
+            <div class="rs-data" id="rsData"></div>
+          </div>
+          <div class="rs-col"><h5><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 2.3 13.3 12l-9.7 9.7c-.4-.2-.6-.6-.6-1.1V3.4c0-.5.2-.9.6-1.1zm10.4 10.4 2.6 2.6-11 6.3 8.4-8.9zm3.5-3.5 3 1.7c.9.5.9 1.7 0 2.2l-3 1.7-2.8-2.8 2.8-2.8zM5.6 2.4l11 6.3-2.6 2.6-8.4-8.9z"/></svg>Google Play · chargebacks</h5>
+            <div class="rs-step"><i>1</i><span>A player disputes the same purchase with their bank, and the chargeback goes into review.</span></div>
+            <div class="rs-step"><i>2</i><span>Since August, <b>a lost Google Play dispute costs you the price plus bank fees.</b></span></div>
+            <div class="rs-step"><i>3</i><span>Refund Saver sends Google the evidence of how the coins were used, automatically, while the case is open.</span></div>
+            <div class="rs-data">Turned on by adding your Google Play credentials to Adapty. Savings, requests and win rate for Apple and Google sit side by side in one dashboard.</div>
+          </div>
+        </div>
+        <p class="rs-note">Refund Saver covers consumables. For a coin pack, the consumed share is the share of its coins already spent, which is why a played-through pack is the strongest case. Example player shown; your data replaces it.</p>
+      </div>
+      <div class="bts-p" data-p="coins">
+        <div class="cs">
+          <div class="cs-col"><h5>Coins in</h5><div class="s">by source, per segment and week</div>
+            <div class="cs-r in"><span>Shop packs</span><i style="width:92%"></i></div>
+            <div class="cs-r in"><span>Starter Pack</span><i style="width:44%"></i></div>
+            <div class="cs-r in"><span>Daily missions</span><i style="width:70%"></i></div>
+            <div class="cs-r in"><span>Tournament rewards</span><i style="width:58%"></i></div>
+          </div>
+          <div class="cs-col"><h5>Coins out</h5><div class="s">by sink, per segment and week</div>
+            <div class="cs-r"><span>Table stakes</span><i style="width:88%"></i></div>
+            <div class="cs-r"><span>Tournaments</span><i style="width:66%"></i></div>
+            <div class="cs-r"><span>League play</span><i style="width:50%"></i></div>
+            <div class="cs-r"><span>Balance left</span><i style="width:30%"></i></div>
+          </div>
+          <div class="cs-q">Layout only. Your data fills the bars. The questions it answers: <b>how many games a pack lasts</b> for each segment, <b>what share of a pack is spent</b> before a refund request, and <b>how close to empty</b> players are when they open the Shop. That last one is what tells you when to show the Shop, and which pack to open it on.</div>
+        </div>
+      </div>
+    </div>
+    <div class="qr side"><img src="img/qr.svg" alt="QR code to the prototype"><div><b>Open it on your phone</b><span>Scan to try the Shop in your hand.</span></div></div>
+  </div>
+
+  <aside class="panelcol"><div class="pn" id="pn"></div></aside>
+</div>
+</div><!-- /view-proto -->
+<div class="finger" id="finger"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="cg" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#F4F2F6"/><stop offset=".6" stop-color="#B7B2C2"/><stop offset="1" stop-color="#7E7890"/></radialGradient>
+    <linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3FA8E8"/><stop offset="1" stop-color="#1C5FA8"/></linearGradient>
+    <linearGradient id="vg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7A54A"/><stop offset="1" stop-color="#C8642A"/></linearGradient>
+    <symbol id="coin" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="url(#cg)" stroke="#6E6880" stroke-width="1.5"/><circle cx="20" cy="20" r="13" fill="none" stroke="#8E889E" stroke-width="1.2"/><path d="M20 9 22.6 17.4 31 20 22.6 22.6 20 31 17.4 22.6 9 20 17.4 17.4z" fill="#6D6683"/></symbol>
+    <symbol id="hex" viewBox="0 0 22 24"><path d="M11 1 20.5 6.5v11L11 23 1.5 17.5v-11z" fill="url(#hg)" stroke="#123F73" stroke-width="1.4"/><path d="M11 5.5 16.6 8.7v6.6L11 18.5 5.4 15.3V8.7z" fill="#CFEFFF" opacity=".9"/><circle cx="11" cy="12" r="2.3" fill="#1C5FA8"/></symbol>
+    <symbol id="vip" viewBox="0 0 34 38"><path d="M17 1 32 9.5v19L17 37 2 28.5v-19z" fill="#3A1714" stroke="#D07A33" stroke-width="2"/><path d="M17 5 28.5 11.5v15L17 33 5.5 26.5v-15z" fill="url(#vg)"/><path d="M17 8.5 25.5 13.4v11.2L17 29.5 8.5 24.6V13.4z" fill="#3A1714"/><text x="17" y="24" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="12" fill="#F7A54A">1</text><path d="M14 1.5 17-1l3 2.5" fill="#F7A54A"/></symbol>
+    <symbol id="burst" viewBox="0 0 50 50"><path d="M25 1l3.2 4.1 4.8-2.2 1.7 5 5.2-.4-.3 5.2 5 1.7-2.1 4.8 4.1 3.3-4.1 3.3 2.1 4.8-5 1.7.3 5.2-5.2-.4-1.7 5-4.8-2.2L25 49l-3.2-4.1-4.8 2.2-1.7-5-5.2.4.3-5.2-5-1.7 2.1-4.8L.4 25l4.1-3.3-2.1-4.8 5-1.7-.3-5.2 5.2.4 1.7-5 4.8 2.2z" fill="#E2353D" stroke="#B91F2A" stroke-width="1"/><circle cx="25" cy="25" r="18.5" fill="none" stroke="#F6A3A3" stroke-width="1" stroke-dasharray="2 2"/></symbol>
+  </defs>
+</svg>
+
+<script>
+var $=function(s){return document.querySelector(s);}, $$=function(s){return [].slice.call(document.querySelectorAll(s));};
+/* packs exactly as published in Rummy Fun's Shop (build 2026.40.9) */
+var PACKS={
+  starter_pack:{c:2250,h:300,pct:50,price:'3,49 €',art:'astarter.png',wide:true},
+  coins_1000:{c:1000,h:200,pct:0,price:'2,49 €',art:'a1000.png'},
+  coins_2500:{c:2500,h:600,pct:0,price:'5,99 €',art:'a2500.png'},
+  coins_5500:{c:5500,h:1400,pct:10,price:'11,99 €',art:'a5500.png',badge:'popular'},
+  coins_12000:{c:12000,h:3200,pct:20,price:'23,99 €',art:'a12000.png'},
+  coins_32500:{c:32500,h:9000,pct:30,price:'59,99 €',art:'a32500.png'},
+  coins_75000:{c:75000,h:20000,pct:50,price:'119,99 €',art:'a75000.png',badge:'best'}
+};
+var ALL=['starter_pack','coins_1000','coins_2500','coins_5500','coins_12000','coins_32500','coins_75000'];
+var SEGS={
+  new:{n:'new_player',packs:ALL,open:'starter_pack',close:'starter_offer'},
+  payer:{n:'payer',packs:ALL.slice(1),open:'coins_2500',close:'none'},
+  whale:{n:'high_spender',packs:ALL.slice(1).reverse(),open:'coins_75000',close:'none'}
+};
+var T={
+  shop:['Shop','Shop','Boutique'],
+  starter:['Starter Pack','Starterpaket','Pack de départ'],
+  free:['{p}% free','{p}% gratis','{p}% offerts'],
+  freeB:['+{n} free','+{n} gratis','+{n} offerts'],
+  popular:['Popular','Beliebt','Top vente'],
+  best:['Best deal','Top-Angebot','Super offre'],
+  left:['1 left','Noch 1','Plus que 1'],
+  ends:['Ends in: {t}','Endet in: {t}','Fin dans : {t}'],
+  vip:['Collect VIP points for a higher bonus.','Sammle VIP-Punkte für einen höheren Bonus.','Collecte des points VIP pour un meilleur bonus.'],
+  offerT:['Before you go','Bevor du gehst','Avant de partir'],
+  offerS:['Your Starter Pack is for new players only: 2,250 coins for 3,49 €.','Dein Starterpaket gibt es nur für neue Spieler: 2.250 Münzen für 3,49 €.','Ton pack de départ est réservé aux nouveaux joueurs : 2 250 pièces pour 3,49 €.'],
+  no:['No thanks','Nein, danke','Non merci'],
+  toastBuy:['App Store purchase sheet opens here','Hier öffnet sich der App-Store-Kauf','La fenêtre d’achat App Store s’ouvre ici'],
+  toastLobby:['Back to the lobby','Zurück zur Lobby','Retour au salon'],
+  toastHome:['Home','Startseite','Accueil']
+};
+var LOC=['en-US','de-DE','fr-FR'];
+var S={st:'today',seg:'new',v:'A',lang:'en',theme:'light',bal:2500,tab:'rc',offer:false};
+function L(){ return {en:0,de:1,fr:2}[S.lang]; }
+function t(k,vars){ var s=T[k][L()]; for(var x in (vars||{})) s=s.replace('{'+x+'}',vars[x]); return s; }
+function nf(n){ return new Intl.NumberFormat(LOC[L()]).format(n); }
+function freeCoins(p){ return Math.round(p.c-p.c/(1+p.pct/100)); }
+var CO='<svg viewBox="0 0 40 40"><use href="#coin"/></svg>', HX='<svg viewBox="0 0 22 24"><use href="#hex"/></svg>';
+
+function freeBar(p){
+  if(!p.pct) return '<div class="rf-free none"></div>';
+  return S.v==='B' ? '<div class="rf-free" data-t1>'+t('freeB',{n:nf(freeCoins(p))}).replace('+','+'+'<svg viewBox="0 0 40 40" style="width:12px;height:12px"><use href="#coin"/></svg>')+'</div>'
+                   : '<div class="rf-free" data-t1>'+t('free',{p:p.pct})+'</div>';
+}
+function card(id){
+  var p=PACKS[id], h;
+  if(p.wide){
+    h='<div class="rf-card wide"><div class="rf-in"><div class="rf-st-h">'+t('starter')+'<i></i></div>'+
+      '<div class="rf-st-body"><img src="img/'+p.art+'" alt=""><div class="rf-st-amt"><div class="c">'+CO+nf(p.c)+'</div><div class="h">+ '+HX+nf(p.h)+'</div></div></div>'+
+      freeBar(p)+'<div class="rf-price">'+p.price+'<span class="rf-left">'+t('left')+'</span></div></div></div>';
+  } else {
+    h='<div class="rf-card"><div class="rf-in"><div class="rf-amt"><div class="c">'+CO+nf(p.c)+'</div><div class="h">+ '+HX+nf(p.h)+'</div></div>'+
+      '<div class="rf-art"><img src="img/'+p.art+'" alt=""></div>'+freeBar(p)+'<div class="rf-price">'+p.price+'</div></div></div>';
+    if(p.badge) h+='<div class="rf-badge'+(p.badge==='best'?' lg':'')+'"><svg viewBox="0 0 50 50"><use href="#burst"/></svg><span>'+t(p.badge)+'</span></div>';
+  }
+  return h;
+}
+var endAt=Date.now()+(4*60+22)*60000;
+function ends(){ var m=Math.max(0,Math.round((endAt-Date.now())/60000)); return t('ends',{t:Math.floor(m/60)+'h '+(m%60)+'m'}); }
+
+function renderShop(scroll){
+  var sg=SEGS[S.seg];
+  $('#rfRow').innerHTML=sg.packs.map(function(id){
+    return '<button class="rf-cardwrap" data-id="'+id+'">'+card(id)+(PACKS[id].wide?'<div class="rf-ends" data-ends>'+ends()+'</div>':'')+'</button>';
+  }).join('');
+  $$('#rfRow .rf-cardwrap').forEach(function(b){ b.addEventListener('click',function(){ buy(b.dataset.id); }); });
+  $('#rfShCard').innerHTML='<div class="rf-cardwrap">'+card('starter_pack')+'</div>';
+  if(scroll!==false) openOn(true);
+}
+function scrollTo_(id){ var row=$('#rfRow'), el=row.querySelector('[data-id="'+id+'"]'); if(el) row.scrollTo({left:Math.max(0,el.offsetLeft-62),behavior:'smooth'}); }
+function openOn(instant){
+  var row=$('#rfRow'), el=row.querySelector('[data-id="'+SEGS[S.seg].open+'"]'); if(!el) return;
+  row.scrollTo({left:Math.max(0,el.offsetLeft-62),behavior:instant?'auto':'smooth'});
+}
+function syncScreen(){
+  var pin=$('#phoneIn'); pin.classList.toggle('dark',S.theme==='dark');
+  $$('[data-t]').forEach(function(e){ e.textContent=t(e.dataset.t); });
+  $('#rfBalN').textContent=nf(S.bal);
+  $('#rfShTm').textContent=ends();
+  $('#shop').classList.toggle('offer',S.offer);
+  $$('#oSeg button').forEach(function(b){ b.classList.toggle('on',b.dataset.k===S.seg); });
+  $$('#oVar button').forEach(function(b){ b.classList.toggle('on',b.dataset.k===S.v); });
+  $('#oVar [data-k=B]').textContent='B · “'+T.freeB[0].replace('{n}','7,500')+'”';
+  $$('.bts-tabs button').forEach(function(b){ b.classList.toggle('on',b.dataset.tab===S.tab); });
+  $$('.bts-p').forEach(function(p){ p.classList.toggle('on',p.dataset.p===S.tab); });
+  renderJSON(); renderRefund(); renderPanel();
+  $$('#chips .chip').forEach(function(c){ c.classList.toggle('on',c.dataset.st===S.st); });
+}
+function rerender(){ renderShop(); syncScreen(); }
+
+/* the payload the Shop reads */
+var lastJ={};
+function renderJSON(){
+  var sg=SEGS[S.seg], cur={seg:sg.n,v:S.v,open:sg.open,close:sg.close,packs:sg.packs.join(),label:S.v==='B'?'coins':'percent'};
+  function c(k,s){ return lastJ[k]!==undefined&&lastJ[k]!==cur[k]?'<span class="chg">'+s+'</span>':s; }
+  function q(s){ return '<span class="st">"'+s+'"</span>'; }
+  function ky(s){ return '<span class="ky">"'+s+'"</span>'; }
+  var j='<span class="cm">// placement "shop" · audience: '+sg.n+'\n// A/B test "shop_bonus_copy" · variant '+S.v+'</span>\n{\n'+
+    '  '+ky('segment')+': '+c('seg',q(sg.n))+',\n'+
+    '  '+ky('packs')+': '+c('packs','['+sg.packs.map(function(p){return q(p);}).join(', ').replace(/(, [^,]*, [^,]*, [^,]*), /,'$1,\n             ')+']')+',\n'+
+    '  '+ky('badges')+': { '+ky('coins_5500')+': '+q('popular')+', '+ky('coins_75000')+': '+q('best_deal')+' },\n'+
+    '  '+ky('bonus_label')+': '+c('label',q(cur.label))+',\n'+
+    '  '+ky('open_on')+': '+c('open',q(sg.open))+',\n'+
+    '  '+ky('on_close')+': '+c('close',q(sg.close))+'\n}';
+  $('#json').innerHTML=j; lastJ=cur;
+}
+function renderRefund(){
+  $('#rsData').innerHTML='Coins granted <b>2,250</b> · coins spent <b>1,980</b> (<b>88%</b> consumed)<br>Days since install <b>41</b> · games played <b>63</b><br>Preferred outcome <b>decline</b>';
+}
+
+/* the side panel: one entry per stage */
+var KEPT_SHOP='The wood header, the autumn garland, the cream-framed teal cards and their coin art, the green bonus bars, Popular and Best deal, every price, the VIP line.';
+var PANEL={
+  today:{ctx:true,t:'Your Shop, as it ships today',hyp:'Seven packs in one row: the 3,49 € Starter Pack with its timer, then 2,49 € up to the 119,99 € chest. <b>Every chip below runs on this same screen</b>, drawn from the payload under the phone.',kept:KEPT_SHOP},
+  ab:{n:1,t:'A/B test your Shop without shipping a build',hyp:'Try reading your packs, order, badges and bonus labels from an Adapty Remote Config and testing them, <b>because today every change to the Shop waits for a release on two stores.</b> The test on screen says “+7,500 free” instead of “30% free”: the same coins, said as coins.',out:'ARPU +5–10%',cap:'per paying player',kept:'Your Shop code and your cards. The free-coin numbers are worked out from your own percentages: 32,500 at 30% free is 25,000 plus 7,500.'},
+  seg:{n:2,t:'Open a different Shop for each kind of player',hyp:'Try one payload per segment: new players open on the Starter Pack, payers on 2,500, high spenders on the 75,000 chest, <b>because a player on their first game and a player who already paid 59,99 € want different things from the same row.</b>',out:'CR +10–15%',cap:'to a purchase',kept:'The same seven packs and prices for everyone. Segments only change which are shown, in what order, and where the row opens.'},
+  offer:{n:3,t:'Show the Starter Pack when a new player leaves the Shop',hyp:'Try opening your own Starter Pack as a sheet when a player who has never paid taps back, <b>because it is your cheapest way in, 2,250 coins for 3,49 € with 50% free, and today leaving the Shop costs nothing to ignore.</b>',out:'ARPU +10–15%',cap:'from the second chance',kept:'The orange Starter Pack card, 50% free, 1 left and your own Ends in timer. Payers and high spenders just go back to the lobby.'},
+  refund:{n:4,t:'Win back refunded coin packs, on iOS and on Android',hyp:'Try Refund Saver, which answers Apple’s refund requests and Google Play chargebacks with how the coins were used, <b>because a played-through coin pack is the easiest refund to contest and the store only knows that if you tell it.</b>',out:'Refunds up to −40%',cap:'the reduction Adapty publishes for Refund Saver',kept:'Nothing in the game changes. It runs on Adapty’s side from your store credentials, with your preferred outcome per platform.'},
+  coins:{n:5,t:'See where every coin goes',hyp:'Try one view of coins bought, earned and spent by segment, <b>because the Shop sells coins, but the wish to buy starts at the table where they ran out.</b> We would build this for you on top of Adapty’s purchase data.',outLbl:'What we would add for you',out:'Coin-spend analytics',cap:'built for Rummy Fun, next to your revenue',kept:'Your Shop and your economy. This is a report, not a change to the game.'}
+};
+function renderPanel(){
+  var p=PANEL[S.st], h='';
+  h+= p.ctx ? '<div class="pn-eb ctx">Context · no change proposed</div>' : '<div class="pn-eb">Idea '+p.n+' of 5</div>';
+  h+='<h1>'+p.t+'</h1><p class="hyp">'+p.hyp+'</p>';
+  if(!p.ctx) h+='<div class="pn-out"><div class="lbl">'+(p.outLbl||'Potential outcome · based on Adapty data')+'</div><b>'+p.out+'</b><span>'+p.cap+'</span></div>';
+  h+='<div class="kept"><div class="k">Your design, unchanged</div><p>'+p.kept+'</p></div>';
+  h+='<div class="pn-lang'+(S.lang!=='en'?' on':'')+'">'+(S.lang==='de'?'German':'French')+' Shop translated by us. Prices are as published in your Shop.</div>';
+  h+='<div class="pn-foot">Impact ranges are Adapty’s expected effect from teardowns and A/B tests across apps — not measured lift for Rummy Fun. Packs, prices, bonuses, badges and the timer come from Rummy Fun’s own Shop.</div>';
+  $('#pn').innerHTML=h;
+}
+
+/* stages: each chip pre-fills state */
+var STAGES=[
+  {st:'today',l:'Shop today'},
+  {st:'ab',n:1,l:'A/B test'},
+  {st:'seg',n:2,l:'Segments'},
+  {st:'offer',n:3,l:'Offer on close',cls:'offer'},
+  {st:'refund',n:4,l:'Refund Saver'},
+  {st:'coins',n:5,l:'Coin spend'}
+];
+$('#chips').innerHTML=STAGES.map(function(s){ return '<button class="chip'+(s.cls?' '+s.cls:'')+'" data-st="'+s.st+'">'+(s.n?'<i>'+s.n+'</i>':'')+s.l+'</button>'; }).join('');
+function go(st){
+  S.st=st; S.offer=false; lastJ={};
+  if(st==='today'){ S.seg='new'; S.v='A'; S.tab='rc'; }
+  if(st==='ab'){ S.seg='new'; S.v='B'; S.tab='rc'; }
+  if(st==='seg'){ S.seg='payer'; S.v='A'; S.tab='rc'; }
+  if(st==='offer'){ S.seg='new'; S.tab='rc'; S.offer=true; }
+  if(st==='refund'){ S.tab='refund'; }
+  if(st==='coins'){ S.tab='coins'; }
+  rerender();
+  if(st==='ab') setTimeout(function(){ scrollTo_('coins_12000'); flash('#rfRow .rf-free:not(.none)'); },120);
+  if(st==='seg') setTimeout(function(){ flash('#rfRow .rf-card'); },120);
+}
+function flash(sel){ $$(sel).forEach(function(e){ e.classList.remove('hl'); void e.offsetWidth; e.classList.add('hl'); }); }
+$$('#chips .chip').forEach(function(c){ c.addEventListener('click',function(e){ if(e.isTrusted) stopDemo(); go(c.dataset.st); }); });
+
+/* controls */
+$$('#oSeg button').forEach(function(b){ b.addEventListener('click',function(e){ if(e.isTrusted) stopDemo(); S.seg=b.dataset.k; S.offer=false; S.tab='rc'; S.st=S.seg==='new'?(S.v==='B'?'ab':'today'):'seg'; rerender(); flash('#rfRow .rf-card'); }); });
+$$('#oVar button').forEach(function(b){ b.addEventListener('click',function(e){ if(e.isTrusted) stopDemo(); S.v=b.dataset.k; S.offer=false; S.tab='rc'; S.st=S.v==='B'?'ab':(S.seg==='new'?'today':'seg'); var sl=$('#rfRow').scrollLeft; renderShop(false); $('#rfRow').scrollLeft=sl; syncScreen(); if(S.v==='B'&&S.seg!=='whale') scrollTo_('coins_12000'); flash('#rfRow .rf-free:not(.none)'); }); });
+$$('.bts-tabs button').forEach(function(b){ b.addEventListener('click',function(e){ if(e.isTrusted) stopDemo(); S.tab=b.dataset.tab; S.st={rc:(S.v==='B'?'ab':(S.seg==='new'?'today':'seg')),refund:'refund',coins:'coins'}[S.tab]; syncScreen(); }); });
+
+var tt; function toast(m){ var e=$('#toast'); e.textContent=m; e.classList.add('show'); clearTimeout(tt); tt=setTimeout(function(){ e.classList.remove('show'); },1700); }
+function buy(id){
+  toast(t('toastBuy'));
+  var add=PACKS[id].c, from=S.bal, to=S.bal+add, t0=performance.now(), bal=$('#rfBal');
+  S.bal=to; bal.classList.add('up');
+  (function step(now){ var k=Math.min(1,(now-t0)/700); $('#rfBalN').textContent=nf(Math.round(from+(to-from)*k)); if(k<1) requestAnimationFrame(step); else setTimeout(function(){ bal.classList.remove('up'); },500); })(t0);
+}
+$('#rfBack').addEventListener('click',function(){
+  if(SEGS[S.seg].close==='starter_offer'){ S.offer=true; S.st='offer'; S.tab='rc'; syncScreen(); }
+  else toast(t('toastLobby'));
+});
+$('#rfHome').addEventListener('click',function(){ toast(t('toastHome')); });
+$('#rfShX').addEventListener('click',function(){ S.offer=false; syncScreen(); toast(t('toastLobby')); });
+$('#rfNo').addEventListener('click',function(){ S.offer=false; syncScreen(); toast(t('toastLobby')); });
+$('#rfDim').addEventListener('click',function(){ S.offer=false; syncScreen(); });
+$('#rfBuy').addEventListener('click',function(){ buy('starter_pack'); setTimeout(function(){ S.offer=false; syncScreen(); },900); });
+setInterval(function(){ $$('[data-ends]').forEach(function(e){ e.textContent=ends(); }); $('#rfShTm').textContent=ends(); },30000);
+
+function seg(id,attr,fn){ $$('#'+id+' button').forEach(function(b){ b.addEventListener('click',function(e){ if(e.isTrusted) stopDemo(); fn(b.dataset[attr]); $$('#'+id+' button').forEach(function(x){ x.classList.toggle('on',x===b); }); var sl=$('#rfRow').scrollLeft; renderShop(false); $('#rfRow').scrollLeft=sl; syncScreen(); }); }); }
+seg('segTheme','th',function(v){ S.theme=v; });
+seg('segLang','l',function(v){ S.lang=v; });
+
+/* fit the landscape phone to its column */
+function fit(){
+  var col=$('#phonecol'), box=$('#phonebox'), ph=$('#phone');
+  var land=window.innerHeight<=500&&window.innerWidth>window.innerHeight&&window.innerWidth<=1000;
+  var small=window.innerWidth<=500||land, W=small?844:866, H=small?390:412;
+  document.body.classList.toggle('fs',small); document.body.classList.toggle('land',land);
+  var avail=small?window.innerWidth:Math.min(866,col.clientWidth-48);
+  var s=Math.min(small?9:1,avail/W); if(land) s=Math.min(window.innerWidth/W,window.innerHeight/H);
+  ph.style.width=W+'px'; ph.style.height=H+'px'; ph.style.transform='scale('+s+')';
+  box.style.width=(W*s)+'px'; box.style.height=(H*s)+'px';
+}
+window.addEventListener('resize',fit);
+
+/* ---- views ---- */
+function showView(v){ if(v!=='proto') stopDemo(); $$('.view').forEach(function(x){ x.classList.remove('on'); }); $('#view-'+v).classList.add('on');
+  $$('.nav-links button').forEach(function(b){ b.classList.toggle('on',b.dataset.view===v); }); window.scrollTo(0,0); if(v==='proto'){ fit(); openOn(true); } }
+$$('[data-view]').forEach(function(b){ b.addEventListener('click',function(){ showView(b.dataset.view); }); });
+$$('.idea[data-go]').forEach(function(b){ b.addEventListener('click',function(){ showView('proto'); go(b.dataset.go); }); });
+
+/* ---- the 30-second walkthrough ---- */
+var demo={on:false,tok:0,t0:0,dur:27500,raf:0};
+function wait(ms,tok){ return new Promise(function(res,rej){ setTimeout(function(){ tok===demo.tok?res():rej('stop'); },ms); }); }
+function cap(txt){ $('#demoTxt').textContent=txt; }
+function fingerTo(el){ var r=el.getBoundingClientRect(), f=$('#finger'); f.style.left=(r.left+r.width/2+window.scrollX)+'px'; f.style.top=(r.top+r.height/2+window.scrollY)+'px'; f.classList.add('on'); }
+async function tap(sel,tok){ var el=typeof sel==='string'?$(sel):sel; if(!el) return; var r=el.getBoundingClientRect(); if(r.top<70||r.bottom>window.innerHeight-10){ el.scrollIntoView({block:'center',behavior:'smooth'}); await wait(380,tok); } fingerTo(el); await wait(380,tok); $('#finger').classList.add('press'); await wait(120,tok); $('#finger').classList.remove('press'); el.click(); await wait(160,tok); }
+function bar(){ if(!demo.on) return; var p=Math.min(1,(performance.now()-demo.t0)/demo.dur); $('#demoBar').style.width=(p*100)+'%'; demo.raf=requestAnimationFrame(bar); }
+async function startDemo(){
+  stopDemo(); var tok=++demo.tok; demo.on=true; demo.t0=performance.now(); demo.log=[];
+  showView('proto'); S.bal=2500; go('today');
+  $('#demoCap').classList.add('on'); bar();
+  try{
+    cap('Your Shop today: seven packs in one row, drawn from the payload under the phone.'); await wait(2400,tok);
+    cap('Test B says the bonus in coins. The payload changes; no build ships.'); await tap('#oVar [data-k=B]',tok); await wait(2200,tok);
+    await tap('#oVar [data-k=A]',tok); await wait(500,tok);
+    cap('Segments: a payer opens on 2,500, without the Starter Pack.'); await tap('#oSeg [data-k=payer]',tok); await wait(2000,tok);
+    cap('A high spender opens on the 75,000 chest.'); await tap('#oSeg [data-k=whale]',tok); await wait(2000,tok);
+    cap('A new player opens on the Starter Pack.'); await tap('#oSeg [data-k=new]',tok); await wait(1300,tok);
+    cap('Refund Saver answers Apple and Google Play with how the coins were used.'); await tap('.bts-tabs [data-tab=refund]',tok); await wait(2600,tok);
+    cap('Coin-spend analytics we would build for you: coins in, coins out, by segment.'); await tap('.bts-tabs [data-tab=coins]',tok); await wait(2400,tok);
+    await tap('.bts-tabs [data-tab=rc]',tok); await wait(300,tok);
+    cap('And when a new player leaves the Shop without buying…'); await tap('#rfBack',tok); await wait(900,tok);
+    cap('…your own Starter Pack gets a second chance, with your own timer.'); await wait(2600,tok);
+  }catch(e){ return; }
+  stopDemo();
+}
+function stopDemo(){ if(!demo.on) return; demo.on=false; demo.tok++; cancelAnimationFrame(demo.raf); $('#demoCap').classList.remove('on'); $('#finger').classList.remove('on'); }
+$('#demoBtn').addEventListener('click',startDemo);
+$('#heroDemo').addEventListener('click',startDemo);
+$('#phoneIn').addEventListener('pointerdown',function(e){ if(e.isTrusted) stopDemo(); });
+$('#bts').addEventListener('pointerdown',function(e){ if(e.isTrusted) stopDemo(); });
+$$('.nav-links button').forEach(function(b){ b.addEventListener('click',stopDemo); });
+
+rerender(); fit();
+if(document.fonts) document.fonts.ready.then(function(){ fit(); openOn(true); });
+if(/[?&]open=proto/.test(location.search)) showView('proto');
+</script>
+</body>
+</html>
